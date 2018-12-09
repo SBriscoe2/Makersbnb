@@ -70,5 +70,8 @@ I want the space to be shown as available until the booking is confirmed
 ```
 
 #### Database Instructions
-1. CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(60) UNIQUE, password VARCHAR(15), email VARCHAR(60) UNIQUE));
-2. For test: CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(60) UNIQUE, password VARCHAR(15), email VARCHAR(60) UNIQUE));
+1. CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(60) UNIQUE, password VARCHAR(15), email VARCHAR(60) UNIQUE);
+2. CREATE TABLE spaces (id SERIAL PRIMARY KEY, owner INT REFERENCES users(id), spacename VARCHAR, description VARCHAR, price DECIMAL(6,2));
+3. CREATE TABLE comments (id SERIAL PRIMARY KEY, space INTEGER REFERENCES spaces(id), commenter INTEGER REFERENCES users(id), commenttext VARCHAR(50));
+4. CREATE TABLE bookings(id SERIAL PRIMARY KEY, spaceid INT REFERENCES spaces(id), hirerid INT REFERENCES users(id), startdate DATE, enddate DATE, confirmed BOOLEAN DEFAULT FALSE);
+5. CREATE TABLE availability(id SERIAL PRIMARY KEY, space INTEGER REFERENCES spaces(id),      availabledate DATE, unavailable BOOLEAN DEFAULT FALSE);
